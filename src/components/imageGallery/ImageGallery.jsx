@@ -80,7 +80,7 @@ export default function ImageGallery({imageName}) {
             });             
          }      
         
-    }, [page]);     
+    }, [page, imageName]);     
     
     let offsetHeight = document.documentElement.offsetHeight;
     window.scrollTo({
