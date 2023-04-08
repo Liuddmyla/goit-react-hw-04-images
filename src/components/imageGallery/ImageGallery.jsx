@@ -24,63 +24,89 @@ export default function ImageGallery({imageName}) {
     const [totals, setTotals] = useState(null);
 
     useEffect(() => {
-        const URL = `https://pixabay.com/api/?q=${imageName}&page=1&key=33641920-b059883ebd7147c979fd953b4&image_type=photo&orientation=horizontal&per_page=12`;
+        const URL = `https://pixabay.com/api/?q=${imageName}&page=${page}&key=33641920-b059883ebd7147c979fd953b4&image_type=photo&orientation=horizontal&per_page=12`;
         
         if (!imageName) {
             return;
-        }        
-        setImages([]);
-        setPage(1);
-        setStatus(Status.PENDING);
+        }   
         
-        fetch(URL).then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-                return Promise.reject(new Error('Error!'))
-        })
-        .then(({ hits, total }) => {
-            if (hits.length === 0) {
-                toast.error('Sorry, there are no images matching your search query. Please try again.', { autoClose: 2000, });
-            }
-            setImages((prev) => [...prev, ...hits]);                    
-            setTotals(total);
-            setStatus(Status.RESOLVED);                               
-        })
-        .catch(error => {
-            setError(error);
-            setStatus(Status.REJECTED);                   
-        });  
         
-    }, [imageName]);
-
-    useEffect(() => {
-        const URL = `https://pixabay.com/api/?q=${imageName}&page=${page}&key=33641920-b059883ebd7147c979fd953b4&image_type=photo&orientation=horizontal&per_page=12`;
-      
-        if (page !== 1) {
-       
+            // setImages([]);
+            // setPage(1);
             setStatus(Status.PENDING);
         
             fetch(URL).then(response => {
                 if (response.ok) {
                     return response.json();
                 }
-                 return Promise.reject(new Error('Error!'))
+                return Promise.reject(new Error('Error!'))
             })
-            .then(({ hits }) => {
-                if (hits.length === 0) {
-                    toast.error('Sorry, there are no images matching your search query. Please try again.', { autoClose: 2000, });
-                }
-                setImages((prev) => [...prev, ...hits]);
-                setStatus(Status.RESOLVED);                      
-            })
-            .catch(error => {
-                setError(error);
-                setStatus(Status.REJECTED);
-            });             
-         }      
+                .then(({ hits, total }) => {
+                    if (hits.length === 0) {
+                        toast.error('Sorry, there are no images matching your search query. Please try again.', { autoClose: 2000, });
+                    }
+                    setImages((prev) => [...prev, ...hits]);
+                    setTotals(total);
+                    setStatus(Status.RESOLVED);
+                })
+                .catch(error => {
+                    setError(error);
+                    setStatus(Status.REJECTED);
+                });
         
-    }, [page, imageName]);     
+
+        //  if (page !== 1) {
+       
+        //     setStatus(Status.PENDING);
+        
+        //     fetch(URL).then(response => {
+        //         if (response.ok) {
+        //             return response.json();
+        //         }
+        //          return Promise.reject(new Error('Error!'))
+        //     })
+        //     .then(({ hits }) => {
+        //         if (hits.length === 0) {
+        //             toast.error('Sorry, there are no images matching your search query. Please try again.', { autoClose: 2000, });
+        //         }
+        //         setImages((prev) => [...prev, ...hits]);
+        //         setStatus(Status.RESOLVED);                      
+        //     })
+        //     .catch(error => {
+        //         setError(error);
+        //         setStatus(Status.REJECTED);
+        //     });             
+        //  }      
+        
+    }, [imageName, page]);
+
+    // useEffect(() => {
+    //     const URL = `https://pixabay.com/api/?q=${imageName}&page=${page}&key=33641920-b059883ebd7147c979fd953b4&image_type=photo&orientation=horizontal&per_page=12`;
+      
+    //     if (page !== 1) {
+       
+    //         setStatus(Status.PENDING);
+        
+    //         fetch(URL).then(response => {
+    //             if (response.ok) {
+    //                 return response.json();
+    //             }
+    //              return Promise.reject(new Error('Error!'))
+    //         })
+    //         .then(({ hits }) => {
+    //             if (hits.length === 0) {
+    //                 toast.error('Sorry, there are no images matching your search query. Please try again.', { autoClose: 2000, });
+    //             }
+    //             setImages((prev) => [...prev, ...hits]);
+    //             setStatus(Status.RESOLVED);                      
+    //         })
+    //         .catch(error => {
+    //             setError(error);
+    //             setStatus(Status.REJECTED);
+    //         });             
+    //      }      
+        
+    // }, [page, imageName]);     
     
     let offsetHeight = document.documentElement.offsetHeight;
     window.scrollTo({

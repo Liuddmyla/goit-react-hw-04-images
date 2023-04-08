@@ -6,10 +6,11 @@ import ImageGallery from './imageGallery/ImageGallery';
 
 export default function App () {
 
-  const [imageName, setImageName] = useState(''); 
+  const [imageName, setImageName] = useState('');
+
   
   const handleFormSubmit = (imageName) => {
-    setImageName(imageName);    
+    setImageName(imageName);     
   } 
   
   return (
