@@ -55,10 +55,13 @@ export default function App () {
         
   }, [imageName, page]);     
   
-  const handleFormSubmit = (imageName) => {
-    setImageName(imageName); 
-    setImages([]);
-    setPage(1);   
+  const handleFormSubmit = (name) => {
+
+    if (name !== imageName) {
+      setImageName(name); 
+      setImages([]);
+      setPage(1);
+    }    
   } 
 
   let offsetHeight = document.documentElement.offsetHeight;
